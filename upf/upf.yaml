@@ -10,16 +10,22 @@ upf:
       - addr: UPF_IP
         advertise: UPF_ADVERTISE_IP
     subnet:
-      - addr: 192.168.100.1/24
-        dev: ogstun
+      - addr: 10.45.0.1/24
         dnn: internet
+        dev: ogstun
       - addr: 2001:230:cafe::1/48
-        dev: ogstun
         dnn: internet
-      - addr: 192.168.101.1/24
+        dev: ogstun
+      - addr: 10.47.0.1/24
+        dnn: xcap
+        dev: ogstun
+      - addr: 2001:230:dafe::1/48
+        dnn: xcap
+        dev: ogstun
+      - addr: 10.46.0.1/24
         dnn: ims
         dev: ogstun2
-      - addr: 2001:230:babe::1/48
+      - addr: 2001:230:eafe::1/48
         dnn: ims
         dev: ogstun2
 

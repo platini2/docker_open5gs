@@ -40,10 +40,13 @@ cp /mnt/smf/make_certs.sh install/etc/freeDiameter
 sed -i 's|SMF_IP|'$SMF_IP'|g' install/etc/open5gs/smf.yaml
 sed -i 's|NRF_IP|'$NRF_IP'|g' install/etc/open5gs/smf.yaml
 sed -i 's|UPF_IP|'$UPF_IP'|g' install/etc/open5gs/smf.yaml
+sed -i 's|SMF_DNS1|'$SMF_DNS1'|g' install/etc/open5gs/smf.yaml
+sed -i 's|SMF_DNS2|'$SMF_DNS2'|g' install/etc/open5gs/smf.yaml
 sed -i 's|PCSCF_IP|'$PCSCF_IP'|g' install/etc/open5gs/smf.yaml
 sed -i 's|SMF_IP|'$SMF_IP'|g' install/etc/freeDiameter/smf.conf
 sed -i 's|PCRF_IP|'$PCRF_IP'|g' install/etc/freeDiameter/smf.conf
 sed -i 's|EPC_DOMAIN|'$EPC_DOMAIN'|g' install/etc/freeDiameter/smf.conf
+sed -i 's|PCRF_BIND_PORT|'$PCRF_BIND_PORT'|g' install/etc/freeDiameter/smf.conf
 sed -i 's|EPC_DOMAIN|'$EPC_DOMAIN'|g' install/etc/freeDiameter/make_certs.sh
 
 # Generate TLS certificates

@@ -5,9 +5,6 @@ parameter:
 
 smf:
     freeDiameter: /open5gs/install/etc/freeDiameter/smf.conf
-    sbi:
-      - addr: SMF_IP
-        port: 7777
     gtpc:
       - addr: SMF_IP
     gtpu:
@@ -15,32 +12,32 @@ smf:
     pfcp:
       - addr: SMF_IP
     subnet:
-      - addr: 192.168.100.1/24
+      - addr: 10.45.0.1/24
         dnn: internet
         dev: ogstun
       - addr: 2001:230:cafe::1/48
-        dev: ogstun
         dnn: internet
-      - addr: 192.168.101.1/24
+        dev: ogstun
+      - addr: 10.47.0.1/24
+        dnn: xcap
+        dev: ogstun
+      - addr: 2001:230:dafe::1/48
+        dnn: xcap
+        dev: ogstun
+      - addr: 10.46.0.1/24
         dnn: ims
         dev: ogstun2
-      - addr: 2001:230:babe::1/48
+      - addr: 2001:230:eafe::1/48
         dnn: ims
         dev: ogstun2
     dns:
-      - 8.8.8.8
-      - 8.8.4.4
+      - SMF_DNS1
+      - SMF_DNS2
       - 2001:4860:4860::8888
       - 2001:4860:4860::8844
     p-cscf:
       - PCSCF_IP
-    mtu: 1400
-
-nrf:
-    sbi:
-      - addr:
-          - NRF_IP
-        port: 7777
+    mtu: 1410
 
 upf:
     pfcp:

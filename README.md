@@ -7,13 +7,6 @@ Docker host machine
 
 - Ubuntu 18.04 and 20.04
 
-SDRs tested with srsLTE eNB
-
-- Ettus USRP B210
-- LimeSDR Mini v1.3
-
-UERANSIM (gNB + UE) simulator
-
 ## Build and Execution Instructions
 
 * Mandatory requirements:
@@ -25,14 +18,9 @@ Clone repository and build base docker image of open5gs, kamailio, ueransim
 
 ```
 git clone https://github.com/herlesupreeth/docker_open5gs
+git checkout ext_ims
 cd docker_open5gs/base
 docker build --no-cache --force-rm -t docker_open5gs .
-
-cd ../ims_base
-docker build --no-cache --force-rm -t docker_kamailio .
-
-cd ../ueransim
-docker build --no-cache --force-rm -t docker_ueransim .
 ```
 
 ### Build and Run using docker-compose
@@ -43,18 +31,6 @@ set -a
 source .env
 docker-compose build --no-cache
 docker-compose up
-
-# srsLTE eNB
-docker-compose -f srsenb.yaml build --no-cache
-docker-compose -f srsenb.yaml up -d && docker attach srsenb
-
-# UERANSIM gNB
-docker-compose -f nr-gnb.yaml build --no-cache
-docker-compose -f nr-gnb.yaml up -d && docker attach nr_gnb
-
-# UERANSIM NR-UE
-docker-compose -f nr-ue.yaml build --no-cache
-docker-compose -f nr-ue.yaml up -d && docker attach nr_ue
 ```
 
 ## Configuration
@@ -67,41 +43,6 @@ MNC
 TEST_NETWORK --> Change this only if it clashes with the internal network at your home/office
 DOCKER_HOST_IP --> This is the IP address of the host running your docker setup
 SGWU_ADVERTISE_IP --> Change this to value of DOCKER_HOST_IP set above only if eNB/gNB is not running the same docker network/host
-UPF_ADVERTISE_IP --> Change this to value of DOCKER_HOST_IP set above only if eNB/gNB is not running the same docker network/host
-```
-
-If eNB/gNB is NOT running in the same docker network/host as the host running the dockerized Core/IMS then follow the below additional steps
-
-Under mme section in docker compose file (docker-compose.yaml, nsa-deploy.yaml), uncomment the following part
-```
-...
-    # ports:
-    #   - "36412:36412/sctp"
-...
-```
-
-Under amf section in docker compose file (docker-compose.yaml, nsa-deploy.yaml, sa-deploy.yaml), uncomment the following part
-```
-...
-    # ports:
-    #   - "38412:38412/sctp"
-...
-```
-
-If deploying in SA mode only (sa-deploy.yaml), then uncomment the following part under upf section
-```
-...
-    # ports:
-    #   - "2152:2152/udp"
-...
-```
-
-If deploying in NSA mode only (nsa-deploy.yaml, docker-compose.yaml), then uncomment the following part under sgwu section
-```
-...
-    # ports:
-    #   - "2152:2152/udp"
-...
 ```
 
 ## Register a UE information
@@ -113,16 +54,6 @@ Password : 1423
 ```
 
 Using Web UI, add a subscriber
-
-## srsLTE eNB settings
-
-If SGWU_ADVERTISE_IP is properly set to the host running the SGWU container in NSA deployment, then the following static route is not required.
-On the eNB, make sure to have the static route to SGWU container (since internal IP of the SGWU container is advertised in S1AP messages and UE wont find the core in Uplink)
-
-```
-# NSA - 4G5G Hybrid deployment
-ip r add <SGWU_CONTAINER_IP> via <SGWU_ADVERTISE_IP>
-```
 
 ## Not supported
 - IPv6 usage in Docker
