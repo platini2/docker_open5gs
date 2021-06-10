@@ -18,8 +18,8 @@ Clone repository and build base docker image of open5gs, kamailio, ueransim
 
 ```
 git clone https://github.com/herlesupreeth/docker_open5gs
-git checkout ext_ims
 cd docker_open5gs/base
+git checkout ext_ims
 docker build --no-cache --force-rm -t docker_open5gs .
 ```
 
