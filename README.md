@@ -35,14 +35,16 @@ docker-compose up
 
 ## Configuration
 
-For the quick run (eNB/gNB, CN in same docker network), edit only the following parameters in .env as per your setup
+Assumption: eNB/gNB, CN not running in the same docker network/host
+
+For the quick run, edit only the following parameters in .env as per your setup
 
 ```
 MCC
 MNC
 TEST_NETWORK --> Change this only if it clashes with the internal network at your home/office
 DOCKER_HOST_IP --> This is the IP address of the host running your docker setup
-SGWU_ADVERTISE_IP --> Change this to value of DOCKER_HOST_IP set above only if eNB/gNB is not running the same docker network/host
+SGWU_ADVERTISE_IP --> Change this to value of DOCKER_HOST_IP
 ```
 
 ## Register a UE information
