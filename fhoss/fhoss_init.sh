@@ -39,11 +39,11 @@ sed -i 's|open-ims.org|'$IMS_DOMAIN'|g' /opt/OpenIMSCore/FHoSS/deploy/webapps/hs
 sed -i 's|MYSQL_IP|'$MYSQL_IP'|g' /opt/OpenIMSCore/FHoSS/deploy/hibernate.properties
 sed -i 's|FHOSS_IP|'$FHOSS_IP'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
 sed -i 's|IMS_DOMAIN|'$IMS_DOMAIN'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
+sed -i 's|FHOSS_BIND_PORT|'$FHOSS_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
+sed -i 's|SCSCF_BIND_PORT|'$SCSCF_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
+sed -i 's|ICSCF_BIND_PORT|'$ICSCF_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
 cd /opt/OpenIMSCore/FHoSS/scripts && ./configurator.sh ${IMS_DOMAIN} ${FHOSS_IP}
 cd /opt/OpenIMSCore/FHoSS/config && ./configurator.sh ${IMS_DOMAIN} ${FHOSS_IP}
-sed -i 's|3868|'$FHOSS_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
-sed -i 's|3870|'$SCSCF_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
-sed -i 's|3869|'$ICSCF_BIND_PORT'|g' /opt/OpenIMSCore/FHoSS/deploy/DiameterPeerHSS.xml
 sed -i 's|open-ims.org|'$IMS_DOMAIN'|g' /opt/OpenIMSCore/FHoSS/src-web/WEB-INF/web.xml
 
 while ! mysqladmin ping -h ${MYSQL_IP} --silent; do
