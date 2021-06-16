@@ -2,7 +2,7 @@ version: '3'
 services:
   mongo:
     build: ./mongo
-    image: docker_open5gs_mongo
+    image: docker_mongo
     container_name: mongo
     env_file:
       - .env
@@ -18,13 +18,14 @@ services:
       default:
         ipv4_address: ${MONGO_IP}
   webui:
-    build: ./webui
-    image: docker_open5gs_webui
+    image: docker_open5gs
     container_name: webui
     depends_on:
       - mongo
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=webui
     volumes:
       - ./webui:/mnt/webui
       - /etc/timezone:/etc/timezone:ro
@@ -37,11 +38,12 @@ services:
       default:
         ipv4_address: ${WEBUI_IP}
   hss:
-    build: ./hss
-    image: docker_open5gs_hss
+    image: docker_open5gs
     container_name: hss
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=hss-1
     volumes:
       - ./hss:/mnt/hss
       - ./log:/open5gs/install/var/log/open5gs
@@ -58,14 +60,15 @@ services:
       default:
         ipv4_address: ${HSS_IP}
   sgwc:
-    build: ./sgwc
-    image: docker_open5gs_sgwc
+    image: docker_open5gs
     depends_on:
       - smf
       - upf
     container_name: sgwc
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=sgwc-1
     volumes:
       - ./sgwc:/mnt/sgwc
       - ./log:/open5gs/install/var/log/open5gs
@@ -78,14 +81,15 @@ services:
       default:
         ipv4_address: ${SGWC_IP}
   sgwu:
-    build: ./sgwu
-    image: docker_open5gs_sgwu
+    image: docker_open5gs
     depends_on:
       - smf
       - upf
     container_name: sgwu
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=sgwu-1
     volumes:
       - ./sgwu:/mnt/sgwu
       - ./log:/open5gs/install/var/log/open5gs
@@ -100,11 +104,12 @@ services:
       default:
         ipv4_address: ${SGWU_IP}
   smf:
-    build: ./smf
-    image: docker_open5gs_smf
+    image: docker_open5gs
     container_name: smf
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=smf-1
     volumes:
       - ./smf:/mnt/smf
       - ./log:/open5gs/install/var/log/open5gs
@@ -122,13 +127,14 @@ services:
       default:
         ipv4_address: ${SMF_IP}
   upf:
-    build: ./upf
-    image: docker_open5gs_upf
+    image: docker_open5gs
     depends_on:
       - smf
     container_name: upf
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=upf-1
     volumes:
       - ./upf:/mnt/upf
       - ./log:/open5gs/install/var/log/open5gs
@@ -146,8 +152,7 @@ services:
     #   - net.ipv6.conf.all.disable_ipv6=0
     network_mode: host
   mme:
-    build: ./mme
-    image: docker_open5gs_mme
+    image: docker_open5gs
     depends_on:
       - hss
       - sgwc
@@ -157,6 +162,8 @@ services:
     container_name: mme
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=mme-1
     volumes:
       - ./mme:/mnt/mme
       - ./log:/open5gs/install/var/log/open5gs
@@ -175,11 +182,12 @@ services:
       default:
         ipv4_address: ${MME_IP}
   pcrf:
-    build: ./pcrf
-    image: docker_open5gs_pcrf
+    image: docker_open5gs
     container_name: pcrf
     env_file:
       - .env
+    environment:
+      - COMPONENT_NAME=pcrf-1
     depends_on:
       - mongo
     volumes:
